@@ -1,0 +1,26 @@
+READLINE
+    - waiting prompte
+    - history
+
+TOKEN -> verif -> execute
+    - echo
+    - cd
+    - pwd
+    - export
+    - unset
+    - env
+    - exit
+
+- PATH 
+- ' '
+- '' ''
+- <
+- >
+- >>
+- <<
+- |
+- environement variable
+- $?
+- ctrl-C
+- ctrl-D
+- ctrl-\
