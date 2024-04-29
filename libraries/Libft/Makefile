@@ -19,6 +19,7 @@ RESET		= \033[0m
 CC 			= cc
 
 SRCS		= ft_strlen.c \
+				ft_lstdel.c\
 				ft_strlenint.c \
 				ft_convert_base.c \
 				ft_atoi.c \

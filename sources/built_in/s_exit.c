@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 17:26:29 by ssteveli          #+#    #+#             */
-/*   Updated: 2023/10/24 13:39:54 by ssteveli         ###   ########.fr       */
+/*   Created: 2024/04/10 14:32:25 by ssteveli          #+#    #+#             */
+/*   Updated: 2024/04/10 14:47:17 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-t_list	*ft_lstnew(t_token token, char *str, int i, t_list *prev)
+void exe_exit(char **a)
 {
-	t_list	*list;
-
-	list = malloc(sizeof(t_list));
-	if (!list)
-		return (0);
-	list->i = i;
-	list->next = 0;
-	list->str = str;
-	list->token = token;
-	list->prev = prev;
-	return (list);
+	ft_printf("exe env\n");
+	exit(0);
 }

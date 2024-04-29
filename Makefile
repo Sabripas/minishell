@@ -1,4 +1,4 @@
-NAME			= minishell
+NAME			= minishell.a
 
 GREEN			= \033[0;32m
 RED				= \033[0;31m
@@ -19,21 +19,17 @@ RM 				= rm -rf
 SRCS_DIR		= ./sources/
 
 BUILT_IN		=	$(addprefix ./sources/built_in/,\
-					cd.c\
-					echo.c\
-					env.c\
-					exit.c\
-					export.c\
-					pwd.c\
-					unset.c)
+					s_cd.c\
+					s_echo.c\
+					s_env.c\
+					s_exit.c\
+					s_export.c\
+					s_pwd.c\
+					s_unset.c)
 
 SRCS 			=	$(addprefix $(SRCS_DIR),\
-					atom.c \
-					level.c\
-					minishell.c \
-					pars.c \
-					token.c \
-					utilises.c)
+					s_minishell.c \
+					s_token.c)
 
 OBJS		= ${SRCS:.c=.o} ${BUILT_IN:.c=.o}
 
@@ -58,6 +54,6 @@ fclean:		clean
 re:			fclean all
 
 run:		${NAME}
-			${CC} ${NAME} ${LIBFT}/${LIBFT_NAME} ${STANDARD_FLAGS} -o ${NAME}
+			${CC} ${NAME} ${LIBFT}/${LIBFT_NAME} ${STANDARD_FLAGS} -o minishell
 
 .PHONY:			all clean fclean re  run

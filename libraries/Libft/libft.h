@@ -18,11 +18,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef enum e_token
+{
+	Not_a_token = 0,
+	Pipe,
+	Greater,
+	D_Greater,
+	Lower,
+	D_Lower
+}   t_token;
+
 typedef struct s_list
 {
-	int				content;
-	int				index;
+	int			i;
+	char		*str;
+	t_token		token;
 	struct s_list	*next;
+	struct s_list	*prev;	
 }					t_list;
 
 size_t	ft_strlen(const char *str);
@@ -53,6 +65,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *stack);
 void	ft_lstadd_back(t_list **lst, t_list *news);
 char	**ft_split(char const *s, char c);
-t_list	*ft_lstnew(int content, int index);
+t_list	*ft_lstnew(t_token token, char *str, int i, t_list *prev);
 t_list	*ft_lstlast(t_list *lst);
+void	ft_lstdel(t_list **alst, void (*del)(void *, int));
 #endif
