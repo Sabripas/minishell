@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void exe_env(char **a)
+int	exe_env(struct s_cmd *)
 {
 	ft_printf("exe env\n");
 }

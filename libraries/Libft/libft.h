@@ -28,6 +28,13 @@ typedef enum e_token
 	D_Lower
 }   t_token;
 
+typedef enum e_type
+{
+	Token = 0,
+	builtin,
+	str
+}	t_type;
+
 typedef struct s_list
 {
 	int			i;
@@ -36,6 +43,17 @@ typedef struct s_list
 	struct s_list	*next;
 	struct s_list	*prev;	
 }					t_list;
+
+typedef struct s_cmd
+{
+	char		**str;
+	int			(*builtin)(struct s_cmd *);
+	int			num_redirection;
+	char		*hd_files_name;
+	t_list		*redirection;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;	
+}					t_cmd;
 
 size_t	ft_strlen(const char *str);
 int		ft_isdigit(char *c);
@@ -67,5 +85,7 @@ void	ft_lstadd_back(t_list **lst, t_list *news);
 char	**ft_split(char const *s, char c);
 t_list	*ft_lstnew(t_token token, char *str, int i, t_list *prev);
 t_list	*ft_lstlast(t_list *lst);
-void	ft_lstdel(t_list **alst, void (*del)(void *, int));
+void	ft_lstdel(t_list **alst);
+t_cmd	*ft_lstnew_2(char **str, int (*builtin)(struct s_cmd *), int num_redirections, char *hd_file_name, t_list *redirection, t_cmd *prev);
+void	ft_lstadd_back2(t_cmd **lst, t_cmd *news);
 #endif

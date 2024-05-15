@@ -13,7 +13,7 @@
 
 #include "../../include/minishell.h"
 
-void exe_pwd(char **a)
+int	exe_pwd(struct s_cmd *)
 {
 	ft_printf("exe pwd\n");
 }

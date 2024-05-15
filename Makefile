@@ -28,6 +28,7 @@ BUILT_IN		=	$(addprefix ./sources/built_in/,\
 					s_unset.c)
 
 SRCS 			=	$(addprefix $(SRCS_DIR),\
+					builtin_change.c \
 					s_minishell.c \
 					s_token.c)
 
@@ -48,6 +49,7 @@ clean:
 
 fclean:		clean
 			${RM} ${NAME}
+			${RM} minishell
 			${RM} a.out
 			@cd $(LIBFT) && make fclean
 

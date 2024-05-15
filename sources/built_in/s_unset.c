@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void exe_unset(char **a)
+int	exe_unset(struct s_cmd *)
 {
 	ft_printf("exe unset\n");
 }

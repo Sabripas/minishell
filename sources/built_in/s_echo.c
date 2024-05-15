@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void exe_echo(char **a)
+int	exe_echo(struct s_cmd *)
 {
 	ft_printf("exe echo\n");
 }

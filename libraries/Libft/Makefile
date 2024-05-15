@@ -45,8 +45,10 @@ SRCS		= ft_strlen.c \
 				len_s.c \
 				ft_toupper.c\
 				ft_lstnew.c \
+				ft_lstnew_2.c \
 				ft_lstlast.c \
 				ft_lstadd_back.c \
+				ft_lstadd_back2.c \
 				ft_lstsize.c \
 				ft_lstadd_front.c
 				

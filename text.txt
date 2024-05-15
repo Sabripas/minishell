@@ -1,0 +1,14 @@
+f
+
+Cmd 1
+str = f cd a 
+exe cd
+node 0;
+str = rt|
+token = 2
+
+node 0;
+str = edf
+token = 4
+
+---------------
