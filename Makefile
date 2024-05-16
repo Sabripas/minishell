@@ -29,6 +29,9 @@ BUILT_IN		=	$(addprefix ./sources/built_in/,\
 
 SRCS 			=	$(addprefix $(SRCS_DIR),\
 					builtin_change.c \
+					cmd.c \
+					error_return.c \
+					free_all.c \
 					s_minishell.c \
 					s_token.c)
 

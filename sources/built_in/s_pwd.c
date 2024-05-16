@@ -1,19 +1,19 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   s_pwd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 14:32:49 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/04/10 14:47:24 by ssteveli         ###   ########.fr       */
+/*   Created: 2024/05/15 15:41:50 by ssteveli          #+#    #+#             */
+/*   Updated: 2024/05/15 15:41:50 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	exe_pwd(struct s_cmd *)
+int	exe_pwd(struct s_cmd *struc)
 {
 	ft_printf("exe pwd\n");
+	return (0);
 }

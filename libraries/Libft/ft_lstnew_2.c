@@ -12,19 +12,17 @@
 
 #include "libft.h"
 
-t_cmd	*ft_lstnew_2(char **str, int (*builtin)(struct s_cmd *), int num_redirections, char *hd_file_name, t_list *redirection, t_cmd *prev)
+t_cmd	*new_2(int (*bn)(struct s_cmd *), t_list *red, char **s, t_cmd *pv)
 {
 	t_cmd	*list;
 
 	list = malloc(sizeof(t_cmd));
 	if (!list)
 		return (0);
-	list->str = str;
-	list->builtin = builtin;
-	list->num_redirection = num_redirections;
-	list->hd_files_name = hd_file_name;
-	list->redirection = redirection;
-	list->prev = prev;
+	list->str = s;
+	list->builtin = bn;
+	list->redirection = red;
+	list->prev = pv;
 	list->next = 0;
 	return (list);
 }

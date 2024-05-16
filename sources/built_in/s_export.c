@@ -12,7 +12,8 @@
 
 #include "../../include/minishell.h"
 
-int exe_export(struct s_cmd *)
+int	exe_export(struct s_cmd *struc)
 {
 	ft_printf("exe export\n");
+	return (0);
 }

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   error_return.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/21 09:24:38 by ggane             #+#    #+#             */
-/*   Updated: 2024/05/15 15:40:45 by ssteveli         ###   ########.fr       */
+/*   Created: 2024/05/15 14:27:34 by ssteveli          #+#    #+#             */
+/*   Updated: 2024/05/15 14:42:33 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstdel(t_list **alst)
+void	error_return(int i, char *str)
 {
-	t_list	*to_sup;
-	t_list	*prochain_maillon;
-
-	to_sup = *alst;
-	while (to_sup)
+	if (i == 1)
 	{
-		prochain_maillon = to_sup->next;
-		free(to_sup);
-		to_sup = prochain_maillon;
+		ft_printf("%s: command not found\n", str);
+		exit(127);
 	}
 }

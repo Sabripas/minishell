@@ -12,8 +12,8 @@
 
 #include "../../include/minishell.h"
 
-int	exe_exit(struct s_cmd *)
+int	exe_exit(struct s_cmd *struc)
 {
 	ft_printf("exe env\n");
-	exit(0);
+	return (0);
 }

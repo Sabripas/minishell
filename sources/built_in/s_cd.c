@@ -12,7 +12,8 @@
 
 #include "../../include/minishell.h"
 
-int	exe_cd(struct s_cmd *)
+int	exe_cd(struct s_cmd *struc)
 {
 	ft_printf("exe cd\n");
+	return (0);
 }

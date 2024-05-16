@@ -26,7 +26,7 @@ typedef enum e_token
 	D_Greater,
 	Lower,
 	D_Lower
-}   t_token;
+}	t_token;
 
 typedef enum e_type
 {
@@ -37,20 +37,20 @@ typedef enum e_type
 
 typedef struct s_list
 {
-	int			i;
-	char		*str;
-	t_token		token;
+	int				i;
+	char			*str;
+	t_token			token;
 	struct s_list	*next;
 	struct s_list	*prev;	
 }					t_list;
 
 typedef struct s_cmd
 {
-	char		**str;
-	int			(*builtin)(struct s_cmd *);
-	int			num_redirection;
-	char		*hd_files_name;
-	t_list		*redirection;
+	char			**str;
+	int				(*builtin)(struct s_cmd *);
+	int				num_redirection;
+	char			*hd_files_name;
+	t_list			*redirection;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;	
 }					t_cmd;
@@ -86,6 +86,6 @@ char	**ft_split(char const *s, char c);
 t_list	*ft_lstnew(t_token token, char *str, int i, t_list *prev);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstdel(t_list **alst);
-t_cmd	*ft_lstnew_2(char **str, int (*builtin)(struct s_cmd *), int num_redirections, char *hd_file_name, t_list *redirection, t_cmd *prev);
+t_cmd	*new_2(int (*bn)(struct s_cmd *), t_list *red, char **s, t_cmd *pv);
 void	ft_lstadd_back2(t_cmd **lst, t_cmd *news);
 #endif

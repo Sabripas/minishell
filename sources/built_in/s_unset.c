@@ -12,7 +12,8 @@
 
 #include "../../include/minishell.h"
 
-int	exe_unset(struct s_cmd *)
+int	exe_unset(struct s_cmd *struc)
 {
 	ft_printf("exe unset\n");
+	return (0);
 }
