@@ -66,6 +66,8 @@ char	**ft_split(char const *s, char c)
 	int		size;
 	int		num_word;
 
+	if (ft_strlen(s) == 0)
+		return (0);
 	i = 0;
 	j = -1;
 	num_word = ft_num_word(s, c);

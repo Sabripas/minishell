@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:34:27 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/05/15 15:58:05 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:59:11 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ t_list	*is_token_bis(t_list **lr, t_list	*tp, t_list *pv, t_list *ll)
 	{
 		if (ll->token != Not_a_token)
 		{
+			if (ll->next == 0)
+			{
+				ft_printf("redirection error\n");
+				exit(0);
+			}
 			if (pv == 0)
 			{
 				pv = ft_lstnew(ll->token, ll->next->str, 0, 0);

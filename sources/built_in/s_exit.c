@@ -14,6 +14,6 @@
 
 int	exe_exit(struct s_cmd *struc)
 {
-	ft_printf("exe env\n");
+	ft_printf("exe exit\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:38:53 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/01/30 14:41:41 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:16:20 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ typedef struct s_list
 
 typedef struct s_cmd
 {
+	// ajout de mes var utiles pour les bultin
+	char			**env;
+	int				nb_var;
+	char			**ex_tmp;
+	char			*input;
+	char			buf[100];
+	// fin d'ajout
 	char			**str;
 	int				(*builtin)(struct s_cmd *);
 	int				num_redirection;
 	char			*hd_files_name;
 	t_list			*redirection;
+	int				fd_herdoc;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;	
 }					t_cmd;

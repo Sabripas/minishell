@@ -25,13 +25,16 @@ BUILT_IN		=	$(addprefix ./sources/built_in/,\
 					s_exit.c\
 					s_export.c\
 					s_pwd.c\
-					s_unset.c)
+					s_unset.c\
+					env_utils.c)
 
 SRCS 			=	$(addprefix $(SRCS_DIR),\
 					builtin_change.c \
 					cmd.c \
 					error_return.c \
+					execut.c \
 					free_all.c \
+					redirection.c \
 					s_minishell.c \
 					s_token.c)
 

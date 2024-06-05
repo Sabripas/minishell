@@ -39,29 +39,27 @@ int	is_buitin(char *a)
 		return (0);
 }
 
-int	(*ch_bn(t_list **ad_lexer))(struct s_cmd *struc)
+int	(*ch_bn(t_list **ad_lexer))(struct s_cmd *struc, int flag)
 {
 	t_list	*lexer;
 
 	lexer = *ad_lexer;
 	while (lexer && lexer->token != Pipe)
 	{
-		if (ft_strncmp(lexer->str, "cd", 1) == 0)
+		if (ft_strncmp(lexer->str, "cd", 3) == 0)
 			return (&(exe_cd));
-		else if (ft_strncmp(lexer->str, "echo", 1) == 0)
+		else if (ft_strncmp(lexer->str, "echo", 5) == 0)
 			return (&(exe_echo));
-		else if (ft_strncmp(lexer->str, "env", 1) == 0)
+		else if (ft_strncmp(lexer->str, "env", 4) == 0)
 			return (&(exe_env));
-		else if (ft_strncmp(lexer->str, "exit", 2) == 0)
+		else if (ft_strncmp(lexer->str, "exit", 5) == 0)
 			return (&(exe_exit));
-		else if (ft_strncmp(lexer->str, "export", 2) == 0)
+		else if (ft_strncmp(lexer->str, "export", 7) == 0)
 			return (&(exe_export));
-		else if (ft_strncmp(lexer->str, "pwd", 2) == 0)
+		else if (ft_strncmp(lexer->str, "pwd", 4) == 0)
 			return (&(exe_pwd));
-		else if (ft_strncmp(lexer->str, "unset", 2) == 0)
+		else if (ft_strncmp(lexer->str, "unset", 6) == 0)
 			return (&(exe_unset));
-		else if (is_exist_cmd(lexer->str) == 1)
-			error_return(1, lexer->str);
 		else
 			return (0);
 	}

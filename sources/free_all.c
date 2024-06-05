@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:44:18 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/05/15 15:41:04 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:08:51 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	ft_lstdel_cmd(t_cmd **cmd)
 void	free_all(t_list **lexer, t_cmd **cmd, char **str)
 {
 	int	i;
+	int j;
 
+	if ((*cmd)->fd_herdoc != -1)
+		close((*cmd)->fd_herdoc);
 	ft_lstdel(lexer);
 	ft_lstdel_cmd(cmd);
 	free(lexer);

@@ -77,16 +77,22 @@ int	main(void)
 	t_cmd	**cmd;
 	char	**str;
 
+	
 	while (1)
 	{
 		str = ft_split(rl_gets("minishell : "), ' ');
-		lexer = ft_calloc(1, sizeof(t_list));
-		cmd = ft_calloc(1, sizeof(t_cmd));
-		get_lexer(lexer, str);
-		if (get_cmds(lexer, cmd) == 1)
-			return (1);
-		print_cmd(cmd);
-		free_all(lexer, cmd, str);
+		if (str != 0)
+		{
+			lexer = ft_calloc(1, sizeof(t_list));
+			cmd = ft_calloc(1, sizeof(t_cmd));
+			get_lexer(lexer, str);
+			if (get_cmds(lexer, cmd) == 1)
+				return (1);
+			(*cmd)->fd_herdoc = -1;
+			execut(cmd);
+			//print_cmd(cmd);
+			free_all(lexer, cmd, str);
+		}
 	}
 	return (0);
 	system("leaks minishell.c");

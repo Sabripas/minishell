@@ -64,12 +64,12 @@ void	get_lexer(t_list **lexer, char **a)
 			prev = ft_lstnew(Pipe, 0, i, prev);
 			ft_lstadd_back(lexer, prev);
 		}
-		else if (ft_strncmp(a[i], "<", 1) == 0)
+		else if (ft_strncmp(a[i], "<", 2) == 0)
 		{
 			prev = ft_lstnew(Lower, 0, i, prev);
 			ft_lstadd_back(lexer, prev);
 		}
-		else if (ft_strncmp(a[i], ">", 1) == 0)
+		else if (ft_strncmp(a[i], ">", 2) == 0)
 		{
 			prev = ft_lstnew(Greater, 0, i, prev);
 			ft_lstadd_back(lexer, prev);
