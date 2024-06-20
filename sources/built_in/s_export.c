@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:32:37 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/03 13:52:51 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:43:13 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,19 @@ void	ft_swap(char **a, char **b)
 	*b = temp;
 }
 
-char	**bubble_sort(t_cmd *struc)
+char	**bubble_sort(t_data *data)
 {
 	int		i;
 	int		j;
 	char	**ar_sorted;
 
-	ar_sorted = ar_dup_or_raised(struc, NULL);
+	ar_sorted = ar_dup_or_raised(data, data->env, NULL);
 	i = 0;
-	while (i < struc->nb_var - 2)
 	{
 		j = 0;
-		while (j < (struc->nb_var - i) - 1)
+		while (j < (data->nb_var - i) - 1)
 		{
-			if (j == struc->nb_var -2)
+			if (j == data->nb_var -2)
 				break ;
 			if (strcmp(ar_sorted[j], ar_sorted[j + 1]) > 0)
 				ft_swap(&ar_sorted[j], &ar_sorted[j + 1]);
@@ -83,41 +82,67 @@ char	**bubble_sort(t_cmd *struc)
 
 // AJOUTER STRCMP FAIT MAISON
 
-void	export_display(t_cmd *struc)
+void	free_char_ar(char **ar)
+{
+	int	i;
+
+	i = 0;
+	while (ar != NULL && ar[i])
+	{
+		free(ar[i]);
+		ar[i] = NULL;
+		i++;
+	}
+}
+
+void	export_display(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	struc->ex_tmp = bubble_sort(struc);
-	while (struc->ex_tmp != NULL && struc->ex_tmp[i])
+	data->env_tmp = bubble_sort(data);
+	while (data->env_tmp != NULL && data->env_tmp[i])
 	{
 		j = 0;
 		write(1, "declare -x ", 11);
-		while (struc->ex_tmp[i][j])
+		while (data->env_tmp[i][j])
 		{
-			if (j && struc->ex_tmp[i][j - 1] == '=')
+			if (j && data->env_tmp[i][j - 1] == '=')
 				break ;
-			write (1, &struc->ex_tmp[i][j], 1);
+			write (1, &data->env_tmp[i][j], 1);
 			j++;
 		}
 		write(1, "\"", 1);
-		while (struc->ex_tmp[i][j])
+		while (data->env_tmp[i][j])
 		{
-			write(1, &struc->ex_tmp[i][j], 1);
+			write(1, &data->env_tmp[i][j], 1);
 			j++;
 		}
 		write(1, "\"\n", 2);
 		i++;
 	}
+	free_char_ar(data->env_tmp);
 }
 
-int	exe_export(t_cmd *struc)
+void	var_adder(t_data *data)
 {
-	// SI EXPORT SEUL SANS ARG, voir avec le parsing si qqch de + propre 
-	//if (flag == 1)
-	//{
-		export_display(struc);
+	int	i;
+
+	i = 0;
+	data->env_tmp = ar_dup_or_raised(data, data->env, (*data->cmd)->str);
+	free_char_ar(data->env);
+	data->env = ar_dup_or_raised(data, data->env_tmp, NULL);
+	free_char_ar(data->env_tmp);
+}
+
+int	exe_export(t_data *data)
+{
+	data->nb_input = count_str(data) - 1;
+	if (data->nb_input > 0)
+		var_adder(data);
+	else
+		export_display(data);
 		// NE PAS OUBLIER DE FREE
 		return (0);
 	//}

@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:44:18 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/05 15:08:51 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:06:03 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,23 @@ void	free_all(t_list **lexer, t_cmd **cmd, char **str)
 	int	i;
 	int j;
 
-	if ((*cmd)->fd_herdoc != -1)
+	if (*cmd && (*cmd)->fd_herdoc != -1)
 		close((*cmd)->fd_herdoc);
-	ft_lstdel(lexer);
-	ft_lstdel_cmd(cmd);
-	free(lexer);
-	free(cmd);
+	if (lexer != 0)
+	{
+		ft_lstdel(lexer);
+		free(lexer);
+	}
+	if (cmd != 0)
+	{
+		ft_lstdel_cmd(cmd);
+		free(cmd);
+	}		
 	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
+	if (str != 0)
+	{
+		while (str[++i])
+			free(str[i]);
+		free(str);
+	}
 }

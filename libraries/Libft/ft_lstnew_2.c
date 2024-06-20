@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_cmd	*new_2(int (*bn)(struct s_cmd *), t_list *red, char **s, t_cmd *pv)
+t_cmd	*new_2(int (*bn)(struct s_data *), t_list *red, char **s, t_cmd *pv)
 {
 	t_cmd	*list;
 

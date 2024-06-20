@@ -3,62 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iait-ouf <aitouflih.iman@gmail.com>        +#+  +:+       +#+        */
+/*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:27:48 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/03 13:51:53 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/06/15 09:48:14 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	**ar_dup_or_raised(t_cmd *struc, char *new_str)
+void	raise_strs(t_data *data, char **new_ar, char **new_strs, int *ind)
 {
-	int		i;
-	char	**new_ar;
-
-	i = 0;
-	new_ar = (char **) malloc (struc->nb_var * sizeof(char *));
-	if (!new_ar)
-		exit(1); // ET FREE EN CONSEQUENCES -> data->env[i] toutes les str
-	while (i < struc->nb_var - 1 && struc->env[i])
+	while (new_strs != NULL && new_strs[ind[1]])
 	{
-		new_ar[i] = ft_strdup(struc->env[i]);
-		i++;
+		new_ar[ind[0]] = ft_strdup(new_strs[ind[1]]);
+		ind[0]++;
+		ind[1]++;
+		data->nb_var++;
 	}
-	new_ar[i] = ft_strdup(new_str);
-	i++;
-	new_ar[i] = NULL;
-	if (new_str != NULL)
-		struc->nb_var++;
-	return (new_ar);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	**ar_dup_or_raised(t_data *data, char	**original, char **new_strs)
 {
-	char	*str;
-	int		i;
-	int		j;
+	int		ind[2];
+	char	**new_ar;
 
-	i = 0;
-	j = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (str == NULL)
-		return (NULL); // ET FREE EN CONSEQUENCES -> data->env toutes les strings
-	while (s1[i])
+	ind[1] = 1;
+	ind[0] = 0;
+	new_ar = (char **) malloc ((data->nb_var + data->nb_input + 1)
+			* sizeof(char *));
+	if (!new_ar)
+		exit(1); // ET FREE EN CONSEQUENCES -> data->env[i] toutes les str
+	while (ind[0] < data->nb_var - 1 && original[ind[0]])
 	{
-		str[i] = s1[i];
-		i++;
+		new_ar[ind[0]] = ft_strdup(original[ind[0]]);
+		ind[0]++;
 	}
-	while (s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	// FREE S2 ???? car obtenu par getcwd qui malloc direct mais dans un buf ??
-	return (str);
+	if (new_strs != NULL)
+		raise_strs(data, new_ar, new_strs, ind);
+	new_ar[ind[0]] = NULL;
+	return (new_ar);
 }

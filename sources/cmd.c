@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:34:27 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/03 15:59:11 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:57:21 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,42 @@
 
 t_list	*is_token_bis(t_list **lr, t_list	*tp, t_list *pv, t_list *ll)
 {
+	int k;
+	int l;
+
+	l = 0;
 	while (ll && ll->token != Pipe)
 	{
-		if (ll->token != Not_a_token)
+		if (ll->token != Not_a_token || l == 1)
 		{
-			if (ll->next == 0)
+			if (ll->token == 4)
+			{
+				k = open(ll->next->str, O_RDONLY);
+				if (k == -1)
+					ll->token = 6;
+				else
+					close (k);
+			}
+			if (ll->token != 0 && ll->next == 0)
 			{
 				ft_printf("redirection error\n");
 				exit(0);
 			}
 			if (pv == 0)
 			{
-				pv = ft_lstnew(ll->token, ll->next->str, 0, 0);
+				pv = ft_lstnew(ll->token, 0, 0, 0);
 				tp = pv;
+				l = 1;
+			}
+			else if (ll->token == 0)
+			{
+				ft_printf("test\n");
+				pv = ft_lstnew(0, ll->str, 0, pv);
+				ft_lstadd_back(&tp, pv);
 			}
 			else
 			{
-				pv = ft_lstnew(ll->token, ll->next->str, 0, pv);
+				pv = ft_lstnew(ll->token, 0, 0, pv);
 				ft_lstadd_back(&tp, pv);
 			}
 			sup_list2(lr, ll);
@@ -69,6 +88,8 @@ char	**is_s(t_list **lexer, t_cmd **cmds)
 	}
 	temp = temp_lexer;
 	str = ft_calloc(i + 1, sizeof(char *));
+	if (str == 0)
+		return (0);
 	i = -1;
 	while (temp && temp->token != Pipe)
 	{
@@ -95,6 +116,8 @@ t_cmd	*get_cmds_bis(t_list *tl, t_cmd *tc, t_cmd *prev, t_list **lx)
 			prev = new_2(ch_bn(lx), is_t(lx), is_s(lx, &tc), prev);
 			ft_lstadd_back2(&tc, prev);
 		}
+		if (prev->str == 0)
+			return (0);
 		while (tl && tl->token != Pipe)
 		{
 			tl = tl->next;
@@ -119,6 +142,8 @@ int	get_cmds(t_list **lexer, t_cmd **cmds)
 	temp_cmds = *cmds;
 	prev = 0;
 	temp_cmds = get_cmds_bis(temp_lexer, temp_cmds, prev, lexer);
+	if (temp_cmds == 0)
+		return (1);
 	*cmds = temp_cmds;
 	lexer = add_lexer;
 	return (0);

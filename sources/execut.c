@@ -6,45 +6,47 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:31:42 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/05 15:39:24 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:27:08 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void is_not_builtin(t_cmd *cmd)
+void is_not_builtin(t_data *data)
 {
-	ft_printf("not buitin\n");
+	ft_printf("not builtin\n");
+	find_cmd(data);
 }
 
-void execut_simple(t_cmd *cmd)
+void execut_simple(t_cmd *cmd, t_data *data)
 {
 	if (cmd->redirection != 0)
-		redirect(cmd);
-	if(is_buitin(cmd->str[0]) == 1)
+		redirect(cmd, data);
+	if (is_buitin(cmd->str[0]) == 1)
 	{
-		cmd->builtin(cmd);
+		cmd->builtin(data);
 	}
 	else
-		is_not_builtin(cmd);
+		is_not_builtin(data);
 }
 
-void execut_pipe(t_cmd **cmd)
+void execut_pipe(t_cmd **cmd, t_data *data)
 {
 	ft_printf("it's a pipe\n");
+	pipe_redirection(data);
 }
 
-void execut(t_cmd **cmd)
+void execut(t_cmd **cmd, t_data *data)
 {
 	t_cmd	*temp_cmd;
 
 	temp_cmd = *cmd;
 	if (temp_cmd->next == 0)
 	{
-		execut_simple(temp_cmd);
+		execut_simple(temp_cmd, data);
 	}
 	else
 	{
-		execut_pipe(cmd);
+		execut_pipe(cmd, data);
 	}
 }

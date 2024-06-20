@@ -37,7 +37,6 @@ SRCS 			=	$(addprefix $(SRCS_DIR),\
 					exec_cmd_path.c \
 					file_input.c\
 					file_output.c\
-					pipe.c\
 					str_utils.c\
 					execut.c \
 					expender.c \
@@ -71,6 +70,6 @@ fclean:		clean
 re:			fclean all
 
 run:		${NAME}
-			${CC} ${NAME} ${LIBFT}/${LIBFT_NAME} -lreadline ${STANDARD_FLAGS} -o minishell
+			${CC} ${NAME} ${LIBFT}/${LIBFT_NAME} ${STANDARD_FLAGS} -o minishell
 
 .PHONY:			all clean fclean re  run

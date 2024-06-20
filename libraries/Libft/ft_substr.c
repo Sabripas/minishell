@@ -36,7 +36,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = ft_strlen(s) - start;
 	if ((unsigned int)ft_strlen(s) <= start || len == 0)
 		return (ft_strdup(""));
-	new = malloc((len + 1) * sizeof(char));
+	new = ft_calloc((len + 1), sizeof(char));
 	if (!new)
 		return (0);
 	return (sub_ft_substr(s, start, len, new));

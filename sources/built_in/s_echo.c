@@ -6,14 +6,28 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:31:54 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/04/10 14:47:10 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/15 10:49:15 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	exe_echo(struct s_cmd *struc)
+int	exe_echo(t_data *data)
 {
-	ft_printf("exe echo\n");
+	int	i;
+
+	if (ft_strncmp((*data->cmd)->str[1], "-n", 2) == 0)
+		i = 2;
+	else
+		i = 1;
+	while ((*data->cmd)->str[i] != NULL)
+	{
+		printf("%s", (*data->cmd)->str[i]);
+		i++;
+	}
+	if (ft_strncmp((*data->cmd)->str[1], "-n", 2) == 0)
+		return (0);
+	else
+		printf("\n");
 	return (0);
 }

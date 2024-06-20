@@ -6,14 +6,14 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:41:50 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/05/15 15:41:50 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:30:50 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	exe_pwd(struct s_cmd *struc)
+int	exe_pwd(t_data *data)
 {
-	ft_printf("exe pwd\n");
+	printf("%s\n", getcwd(data->buf, 100));
 	return (0);
 }

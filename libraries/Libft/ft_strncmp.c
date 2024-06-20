@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:09:11 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/04/10 14:14:05 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:47:10 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (-1);
 	while (((unsigned char *)(s2))[i] != '\0'
 		&& ((unsigned char *)s1)[i] != '\0' && i < n)
 	{

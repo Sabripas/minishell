@@ -6,28 +6,30 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:42:41 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/05 14:36:52 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:49:59 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void redirection_2(t_cmd *cmd)
+void redirection_2(t_cmd *cmd, t_data *data)
 {
 	ft_printf("redirection 2\n");
+	outfile_redirection(data);
 }
 
-void redirection_3(t_cmd *cmd)
+void redirection_3(t_cmd *cmd, t_data *data)
 {
 	ft_printf("redirection 3\n");
 }
 
-void redirection_4(t_cmd *cmd)
+void redirection_4(t_cmd *cmd, t_data *data)
 {
 	ft_printf("redirection 4\n");
+	infile_redirection(data);
 }
 
-void redirection_5(t_cmd *cmd)
+void redirection_5(t_cmd *cmd, t_data *data)
 {
 	char *temp;
 	int fd;
@@ -47,15 +49,15 @@ void redirection_5(t_cmd *cmd)
 	cmd->fd_herdoc = fd;
 }
 
-void redirect(t_cmd *cmd)
+void redirect(t_cmd *cmd, t_data *data)
 {
 	ft_printf("redirection %d detected\n", cmd->redirection->token);
 	if (cmd->redirection->token == 2)
-		redirection_2(cmd);
+		redirection_2(cmd, data);
 	if (cmd->redirection->token == 3)
-		redirection_3(cmd);
+		redirection_3(cmd, data);
 	if (cmd->redirection->token == 4)
-		redirection_4(cmd);
+		redirection_4(cmd, data);
 	if (cmd->redirection->token == 5)
-		redirection_5(cmd);
+		redirection_5(cmd, data);
 }

@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:46:03 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/04/23 15:55:23 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:21:46 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_lexer(t_list **lexer)
 	ft_printf("---------------\n");
 }
 
-void	print_cmd(t_cmd **cmd)
+void	print_cmd(t_cmd **cmd, t_data *data)
 {
 	t_cmd	*temp;
 	int		i;
@@ -59,41 +59,81 @@ void	print_cmd(t_cmd **cmd)
 	{
 		ft_printf("\nCmd 1\n");
 		j = -1;
-		ft_printf("str = ");
+		ft_printf(" multi pipe str = ");
 		while (temp->str[++j])
 		{
 			ft_printf("%s ", temp->str[j]);
 		}
 		ft_printf("\n");
-		temp->builtin(*cmd);
-		print_lexer(&(temp->redirection));
+		if (temp->builtin)
+			temp->builtin(data);
+		if (temp->redirection)
+			print_lexer(&(temp->redirection));
 		temp = temp->next;
 	}
 }
 
-int	main(void)
+void	sigint_handler(int flags)
+{
+	ft_printf("\b\b  ");
+	ft_printf("\nminishell :  ");
+}
+
+void	sigquit_handler(int flags)
+{
+	ft_printf("\b\b  \b\b");
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_list	**lexer;
 	t_cmd	**cmd;
+	t_data	*data;
 	char	**str;
+	(void)	argc;
+	(void)	argv;
+	int i;
 
-	
+	lexer = ft_calloc(1, sizeof(t_list));
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	data = init_env(data, envp, cmd);
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, sigint_handler);
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, sigquit_handler);
 	while (1)
 	{
-		str = ft_split(rl_gets("minishell : "), ' ');
+		i = -1;
+		str = ft_splite_mutan(rl_gets("minishell :  "));
 		if (str != 0)
 		{
-			lexer = ft_calloc(1, sizeof(t_list));
-			cmd = ft_calloc(1, sizeof(t_cmd));
+			hextend(str, data);
 			get_lexer(lexer, str);
+			//print_lexer(lexer);
 			if (get_cmds(lexer, cmd) == 1)
+			{
+				free_all(lexer, cmd, str);
 				return (1);
+			}
+			if ((*cmd)->redirection && (*cmd)->redirection->token == 6)
+			{
+				ft_printf("error redirection cant open file");
+				return (0);
+			}
+			print_cmd(cmd, data);
 			(*cmd)->fd_herdoc = -1;
-			execut(cmd);
-			//print_cmd(cmd);
-			free_all(lexer, cmd, str);
+			execut(cmd, data);
 		}
+		else
+		{
+			ft_printf("\b\bexit");
+			free_all(lexer, cmd, str);
+			exit (0);
+		}
+		while ((*cmd) && (*cmd)->str[++i])
+			(*cmd)->str[i] = NULL;
 	}
+	free_all(lexer, cmd, str);
 	return (0);
-	system("leaks minishell.c");
+	//system("leaks minishell.c");
 }

@@ -6,41 +6,48 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:32:12 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/03 13:47:52 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/06/15 11:04:22 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*int	exe_env(struct s_cmd *struc)
-{
-	ft_printf("exe env\n");
-	return (0);
-}*/
 
 // ATTENTION AU SHELL LVL : commence tjrs a 2 il va falloir le atoi pour le mettre en int selon le level dans lequel on se situe pour le itoa ou alors el print en int et l'ajouter a la chaine de caractere de shell lvl , et l'incrementer comme valeur en int dans la struc principale
 
-void	init_env(t_cmd *struc, char **env)
-{
-	int	i;
+// void	shlvl_updater(t_data *data)
+// {
+// 	int	i;
 
-	i = 0;
-	struc->nb_var = 35;
-	struc->env = (char **)malloc(struc->nb_var * sizeof(char *));
-	if (!struc->env)
-		exit(EXIT_FAILURE); // ECRIRE MSG ERREUR STRERROR ??
-	while (i < struc->nb_var - 1 && env[i])
+// 	i = 0;
+// 	data->shlvl++;
+// 	while (data->env[i])
+// 	{
+// 		if (ft_strncmp("SHLVL=", 6) == 0)
+// 		{
+// 			free(data->env[i]);
+// 			data->env[i] = NULL;
+// 			data->env[i] = ft_strjoin("SHLVL=", ft_itoa(data->shlvl);
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// }
+/*	i = 0;
+	data->shlvl++;
+	while (data->env[i])
 	{
-		if (ft_strncmp("OLDPWD=", env[i], 7) == 0)
+		if (ft_strncmp("SHLVL=", data->env[i], 6) == 0)
 		{
-			struc->env[i] = ft_strdup("OLDPWD");
-			i++;
+			free(data->env[i]);
+			data->env[i] = NULL;
+			data->env[i] = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
+			break ;
 		}
-		struc->env[i] = ft_strdup(env[i]);
 		i++;
 	}
-	struc->env[i] = NULL;
-}
+}*/
+
 
 // MAIS EN FAIT PAS BESOIN POUR VAR SUPP juste besoin d'update mon tab pas besoin de re malloc
 // que faire si je unset PWD puis je export PWD avec une autre valeur qui n'existe pas trouver un moyen de ne pas
@@ -57,7 +64,7 @@ void	init_env(t_cmd *struc, char **env)
 // declare -x PATH="/Users/iait-ouf/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki"
 // declare -x PWD="/Users/iait-ouf/Desktop"
 
-void	old_pwd_update(t_cmd *struc, char *pwd)
+void	old_pwd_update(t_data *struc, char *pwd)
 {
 	int	i;
 
@@ -68,13 +75,13 @@ void	old_pwd_update(t_cmd *struc, char *pwd)
 		{
 			free(struc->env[i]);
 			struc->env[i] = NULL;
-			struc->env[i] = ft_strjoin("OLD", pwd);
+			struc->env[i] = ft_strnjoin("OLD", pwd);
 		}
 		i++;
 	}
 }
 
-void	pwd_update(t_cmd *struc)
+void	pwd_update(t_data *struc)
 {
 	int	i;
 
@@ -86,20 +93,21 @@ void	pwd_update(t_cmd *struc)
 			old_pwd_update(struc, struc->env[i]);
 			free(struc->env[i]);
 			struc->env[i] = NULL;
-			struc->env[i] = ft_strjoin("PWD=", getcwd(struc->buf, 100));
+			struc->env[i] = ft_strnjoin("PWD=", getcwd(struc->buf, 100));
 		}
 		i++;
 	}
 }
 
-int	exe_env(t_cmd *struc)
+int	exe_env(t_data *struc)
 {
 	int	i;
 
 	i = 0;
-	while (struc->env[i] && ft_strchr(struc->env[i], '=', ft_strlen(struc->env[i])) != 0)
+	while (struc->env[i])
 	{
-		printf("%s\n", struc->env[i]);
+		if (char_check(0, '=', struc->env[i]) != -1)
+			printf("%s\n", struc->env[i]);
 		i++;
 	}
 	printf("_=/usr/bin/env\n");
