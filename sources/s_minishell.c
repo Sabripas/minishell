@@ -73,67 +73,27 @@ void	print_cmd(t_cmd **cmd, t_data *data)
 	}
 }
 
-void	sigint_handler(int flags)
-{
-	ft_printf("\b\b  ");
-	ft_printf("\nminishell :  ");
-}
-
-void	sigquit_handler(int flags)
-{
-	ft_printf("\b\b  \b\b");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_list	**lexer;
 	t_cmd	**cmd;
 	t_data	*data;
 	char	**str;
-	(void)	argc;
-	(void)	argv;
-	int i;
+	char	*str_temp;
 
-	lexer = ft_calloc(1, sizeof(t_list));
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	data = init_env(data, envp, cmd);
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGQUIT, sigquit_handler);
+	(void) argc;
+	(void) argv;
+	init_minishell(&data, &cmd, &lexer, envp);
 	while (1)
 	{
-		i = -1;
-		str = ft_splite_mutan(rl_gets("minishell :  "));
-		if (str != 0)
-		{
-			hextend(str, data);
-			get_lexer(lexer, str);
-			//print_lexer(lexer);
-			if (get_cmds(lexer, cmd) == 1)
-			{
-				free_all(lexer, cmd, str);
-				return (1);
-			}
-			if ((*cmd)->redirection && (*cmd)->redirection->token == 6)
-			{
-				ft_printf("error redirection cant open file");
-				return (0);
-			}
-			print_cmd(cmd, data);
-			(*cmd)->fd_herdoc = -1;
-			execut(cmd, data);
-		}
-		else
+		if (launch_mini(str, data, cmd, lexer) == 0)
 		{
 			ft_printf("\b\bexit");
 			free_all(lexer, cmd, str);
 			exit (0);
 		}
-		while ((*cmd) && (*cmd)->str[++i])
-			(*cmd)->str[i] = NULL;
 	}
 	free_all(lexer, cmd, str);
 	return (0);
-	//system("leaks minishell.c");
+	system("leaks minishell.c");
 }

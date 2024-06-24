@@ -61,7 +61,7 @@ int	cd_home(t_data *data)
 int	exe_cd(t_data *data)
 {
 	int		i;
-	char	*home;
+	//char	*home;
 
 	i = 0;
 	if ((*data->cmd)->str[1] == NULL

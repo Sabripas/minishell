@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"	
 
-void	sup_list2(t_list **lexer, t_list *temp_lexer)
+void	sup_list2(t_list *temp_lexer)
 {
 	if (temp_lexer->prev)
 	{
@@ -24,29 +24,9 @@ void	sup_list2(t_list **lexer, t_list *temp_lexer)
 		else
 			temp_lexer->prev->next = 0;
 	}
-	// if (temp_lexer->prev != 0 && temp_lexer->next->next != 0)
-	// {
-	// 	ft_printf("1\n");
-	// 	temp_lexer->prev->next = temp_lexer->next->next;
-	// 	temp_lexer->next->next->prev = temp_lexer->prev;
-	// 	temp_lexer->next = temp_lexer->next->next;
-	// }
-	// else if (temp_lexer->next->next == 0)
-	// {
-	// 	ft_printf("2\n");
-	// 	temp_lexer->prev->next = 0;
-	// 	temp_lexer->next = 0;
-	// }
-	// else
-	// {
-	// 	ft_printf("3\n");
-	// 	*lexer = temp_lexer->next->next;
-	// 	temp_lexer->next->next->prev = 0;
-	// }
-	
 }
 
-t_list *get_lexer_bis(t_list **lexer, char **a, t_list *prev, int i)
+t_list	*get_lexer_bis(t_list **lexer, char **a, t_list *prev, int i)
 {
 	if (ft_strncmp(a[i], ">>", 2) == 0)
 	{
@@ -66,7 +46,7 @@ t_list *get_lexer_bis(t_list **lexer, char **a, t_list *prev, int i)
 	return (prev);
 }
 
-void	get_lexer(t_list **lexer, char **a) 
+void	get_lexer(t_list **lexer, char **a)
 {
 	int		i;
 	t_list	*prev;

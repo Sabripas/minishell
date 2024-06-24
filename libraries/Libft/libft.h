@@ -18,34 +18,39 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#define TO_PIPE 1
-#define FROM_PIPE 0
+# define TO_PIPE 1
+# define FROM_PIPE 0
+
+typedef struct s_glob
+{
+	int				in_heredoc;
+}	t_glob;
 
 typedef struct s_data
 {
-	char	**env;
-	int		nb_var;
-	char	**env_tmp;
-	char	buf[100];
-	int		nb_input;
-	int		shlvl;
-	char	**paths;
-	int		exit_code;
-	pid_t	pid;
-	int		out_fd;
-	int		in_fd;
-	int		pipe_fd[2];
-	struct	s_cmd **cmd;
-	char	*user;
-} t_data;
+	char			**env;
+	int				nb_var;
+	char			**env_tmp;
+	char			buf[100];
+	int				nb_input;
+	int				shlvl;
+	char			**paths;
+	int				exit_code;
+	pid_t			pid;
+	int				out_fd;
+	int				in_fd;
+	int				pipe_fd[2];
+	struct s_cmd	**cmd;
+	char			*user;
+}	t_data;
 
 typedef enum e_token
 {
 	Not_a_token = 0,
 	Pipe,
 	TRUNC,
-	APPEND, 
-	INPUT, //Lower
+	APPEND,
+	INPUT,
 	HEREDOC,
 	ERROR
 }	t_token;
@@ -83,7 +88,7 @@ int		ft_isdigit(char *c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 size_t	ft_strlenint(const int *str);
-int		ft_strchr(int *a, int c, int j);
+int		ft_strchr(char *a, int c, int j);
 int		ft_atoi(const char *str);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 int		ft_printf(const char *a, ...);

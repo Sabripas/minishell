@@ -1,55 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expender.c                                         :+:      :+:    :+:   */
+/*   redirection_bis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 16:53:54 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/24 13:49:06 by ssteveli         ###   ########.fr       */
+/*   Created: 2024/06/24 14:02:53 by ssteveli          #+#    #+#             */
+/*   Updated: 2024/06/24 14:04:08 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	len_to_egal(char *str)
+void	redirection_2(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '=')
-		i++;
-	return (i);
+	ft_printf("redirection 2\n");
+	outfile_redirection(data);
 }
 
-char	*after_egal(char *str)
+void	redirection_3(t_cmd *cmd, t_data *data)
 {
-	int		i;
-	char	*a;
-	int		j;
-
-	i = 0;
-	while (str[i] != '=')
-		i++;
-	i++;
-	a = ft_calloc(ft_strlen(str) - i + 1, sizeof(char));
-	j = 0;
-	while (str[i])
-	{
-		a[j] = str[i];
-		j++;
-		i++;
-	}
-	return (a);
+	(void)cmd;
+	(void)data;
+	ft_printf("redirection 3\n");
 }
 
-char	**hextend(char **a, t_data *data)
+void	redirection_4(t_data *data)
 {
-	int		i;
-	char	*str;
-
-	str = 0;
-	i = -1;
-	a = hextend_bis(a, data, str, i);
-	return (a);
+	ft_printf("redirection 4\n");
+	infile_redirection(data);
 }

@@ -6,19 +6,18 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:31:42 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/18 14:27:08 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:42:03 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void is_not_builtin(t_data *data)
+void	is_not_builtin(t_data *data)
 {
-	ft_printf("not builtin\n");
 	find_cmd(data);
 }
 
-void execut_simple(t_cmd *cmd, t_data *data)
+void	execut_simple(t_cmd *cmd, t_data *data)
 {
 	if (cmd->redirection != 0)
 		redirect(cmd, data);
@@ -30,13 +29,13 @@ void execut_simple(t_cmd *cmd, t_data *data)
 		is_not_builtin(data);
 }
 
-void execut_pipe(t_cmd **cmd, t_data *data)
+void	execut_pipe(t_data *data)
 {
 	ft_printf("it's a pipe\n");
 	pipe_redirection(data);
 }
 
-void execut(t_cmd **cmd, t_data *data)
+void	execut(t_cmd **cmd, t_data *data)
 {
 	t_cmd	*temp_cmd;
 
@@ -47,6 +46,6 @@ void execut(t_cmd **cmd, t_data *data)
 	}
 	else
 	{
-		execut_pipe(cmd, data);
+		execut_pipe(data);
 	}
 }

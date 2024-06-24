@@ -66,7 +66,7 @@ int	exe_unset(t_data *data)
 {
 	int	i;
 	int	n;
-	int test;
+	//int test;
 
 	n = 1;
 	while ((*data->cmd)->str[n] != NULL)

@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:03:33 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/17 17:13:23 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:03:35 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_data	*init_env(t_data *struc, char **env, t_cmd **cmd)
 	int	i;
 
 	i = 0;
-	struc = ft_calloc(1, sizeof(t_data));
 	struc->nb_var = 35;
 	struc->env = (char **)malloc(struc->nb_var * sizeof(char *)); 
 	if (!struc->env)

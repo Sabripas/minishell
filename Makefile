@@ -1,22 +1,4 @@
-NAME			= minishell.a
-
-GREEN			= \033[0;32m
-RED				= \033[0;31m
-RESET			= \033[0m
-
-LIBFT 			= ./libraries/Libft
-
-LIBFT_NAME		= libft.a
-
-CC 				= cc
-
-AR				= ar rc
-
-STANDARD_FLAGS 	= -Wall -Werror -Wextra -lreadline -fsanitize=address -g -g3
-
-RM 				= rm -rf
-
-SRCS_DIR		= ./sources/
+NAME			= minishell
 
 BUILT_IN		=	$(addprefix ./sources/built_in/,\
 					s_cd.c\
@@ -31,33 +13,51 @@ BUILT_IN		=	$(addprefix ./sources/built_in/,\
 
 SRCS 			=	$(addprefix $(SRCS_DIR),\
 					builtin_change.c \
+					cmd_bis.c\
 					cmd.c \
-					init_data.c\
 					error_return.c \
 					exec_cmd_path.c \
+					execut.c \
+					expender_bis.c \
+					expender.c \
 					file_input.c\
 					file_output.c\
-					pipe.c\
-					str_utils.c\
-					execut.c \
-					expender.c \
 					free_all.c \
 					ft_split_mutan.c \
+					init_data.c\
+					minishell_bis.c \
+					pipe.c\
+					redirection_bis.c \
 					redirection.c \
 					s_minishell.c \
-					s_token.c)
+					s_token.c\
+					str_utils.c)
+					
+					
 
 OBJS		= ${SRCS:.c=.o} ${BUILT_IN:.c=.o}
 
-all:		${NAME} run
+READLINE_PATH 	= $(HOME)/homebrew/Cellar/readline/8.2.10/
 
-makelibft:
-			make -C ${LIBFT}
-			cp ${LIBFT}/${LIBFT_NAME} .
-			mv ${LIBFT_NAME} ${NAME}
+INCLUDES		= ./include -I$(READLINE_PATH)/include
 
-${NAME}:	makelibft ${OBJS}
-			${AR} ${NAME} ${OBJS}
+LFLAGS 			= -lreadline -lhistory -L$(READLINE_PATH)/lib
+
+CFLAGS 			= -Wall -Werror -Wextra
+
+LIBFT 			= libraries/Libft
+
+SRCS_DIR		= ./sources/
+
+all:		${NAME}
+
+${NAME}:	${OBJS}
+			@make -C $(LIBFT)
+			@gcc $(CFLAGS) $(LFLAGS) -o $(NAME) $(OBJS) $(LIBFT)/libft.a
+
+%.o:		%.c
+			@gcc $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+
 clean:
 			${RM} ${OBJS}
 			@cd $(LIBFT) && make clean
@@ -69,8 +69,5 @@ fclean:		clean
 			@cd $(LIBFT) && make fclean
 
 re:			fclean all
-
-run:		${NAME}
-			${CC} ${NAME} ${LIBFT}/${LIBFT_NAME} -lreadline ${STANDARD_FLAGS} -o minishell
 
 .PHONY:			all clean fclean re  run
