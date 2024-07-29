@@ -6,149 +6,77 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:50:16 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/21 16:21:48 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:04:28 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	error_quot(void)
+int	transchangeins(int i, char **str, int *ins)
 {
-	ft_printf("error quot\n");
-	return (-1);
+	*str = transform(*str, i);
+	i--;
+	*ins = change_in(*ins);
+	return (i);
 }
 
-int	num_count(char *str)
+char	*dbl_out(char *str, t_data *data)
 {
 	int	i;
-	int	count;
+	int	ind;
+	int	ins;
 
+	ind = 0;
+	ins = 0;
 	i = 0;
-	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (ind == 0 && ins == 0 && str[i] == '-' && \
+			ft_strncmp(str, "export", 6) == 0)
+			data->exit_code = ft_error_write(str[i]);
+		if (str[i] && (str[i] == '\"' || str[i] == '\''))
 		{
-			if (str[i + 1] && str[i + 1] != '\'')
-			{
-				count++;
-				i++;
-				while (str[i] && str[i] != '\'')
-					i++;
-				if (str[i] == 0)
-					return (error_quot());
-			}
-			else
-				i += 2;
+			if (str[i] == '\"' && ins == 0)
+				i = transchangeind(i, &str, &ind);
+			else if (str[i] == '\'' && ind == 0)
+				i = transchangeins(i, &str, &ins);
 		}
-		else if (str[i] == '\"')
-		{
-			if (str[i + 1] == '\0')
-				return (error_quot());
-			if (str[i + 1] != '\"')
-			{
-				count++;
-				i++;
-				while (str[i] && str[i] != '\"')
-					i++;
-				if (str[i] == '\0')
-					return (error_quot());
-				i++;
-			}
-			else
-				i += 2;
-		}
-		else if (str[i] != ' ')
-		{
-			count++;
-			while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"')
-				i++;
-		}
-		else if (str[i] == ' ')
-		{
-			while (str[i] == ' ')
-				i++;
-		}
+		i++;
 	}
-	return (count);
+	return (str);
 }
 
-int	len_to_sep(char *str, int i)
+int	ft_bis_split_mutan(int i, char *str)
 {
-	int	count;
-
-	count = 0;
 	if (str[i] == '\'')
 	{
-		if (str[i] && str[i + 1] == '\'')
-			return (0);
-		i++;
-		while (str[i] && str[i] != '\'')
-		{
-			count++;
+		while (str[i] == '\'')
 			i++;
-		}
-		return (count);
 	}
 	else if (str[i] == '\"')
 	{
-		if (str[i] && str[i + 1] == '\"')
-			return (0);
-		i++;
-		while (str[i] && str[i] != '\"')
-		{
-			count++;
+		while (str[i] == '\"')
 			i++;
-		}
-		return (count);
 	}
-	else if (str[i] != ' ')
-	{
-		while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"')
-		{
-			count++;
-			i++;
-		}
-		return (count);
-	}
-	return (0);
+	return (i);
 }
 
-char	**ft_splite_mutan(char *str)
+char	**ft_splite_mutan_bis(char *str, int count, int size, char **ret)
 {
-	int		count;
-	int		i;
-	int		j;
-	int		size;
-	char	**ret;
+	int	i;
+	int	j;
 
-	count = num_count(str);
-	if (count == -1)
-		return (0);
-	if (count == 0)
-		return (0);
-	ret = ft_calloc(sizeof(char *), count + 1);
 	i = 0;
 	j = 0;
-	while (str[i] && j <= count)
+	while (str[i] && j < count)
 	{
 		size = 0;
 		while (str[i] == ' ')
 			i++;
-		size = len_to_sep(str, i);
+		size = len_to_sep(str, i, str[i]);
 		if (size != 0)
 		{
 			ret[j] = ft_calloc(sizeof(char), size + 1);
-			if (str[i] == '\'')
-			{
-				while (str[i] == '\'')
-					i++;
-			}
-			else if (str[i] == '\"')
-			{
-				while (str[i] == '\"')
-					i++;
-			}
 			ret[j] = ft_substr(str, i, size);
 			j++;
 		}
@@ -157,13 +85,26 @@ char	**ft_splite_mutan(char *str)
 			i += 2;
 			count++;
 		}
-		i += size;
-		if (size != 0 && (str[i - size] == '\'' || str[i - size] == '\"'))
-		{
-			while (str[i] && str[i] != '\'' && str[i] != '\"')
-				i++;
-			i++;
-		}
+		i = ft_splite_mutan_bisbis(i, size, str);
 	}
 	return (ret);
+}
+
+char	**ft_splite_mutan(char *str, t_data *data)
+{
+	int		count;
+	int		j;
+	int		size;
+	char	**ret;
+
+	str = dbl_out(str, data);
+	count = num_count(str, ' ');
+	if (count == -1)
+		return (0);
+	if (count == 0)
+		return (0);
+	ret = ft_calloc(sizeof(char *), count + 1);
+	j = 0;
+	size = 0;
+	return (ft_splite_mutan_bis(str, count, size, ret));
 }

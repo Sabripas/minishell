@@ -14,7 +14,12 @@
 
 void	sup_list2(t_list *temp_lexer)
 {
-	if (temp_lexer->prev)
+	if (temp_lexer->i == 0)
+	{
+		temp_lexer->next->prev = 0;
+		return ;
+	}
+	if (temp_lexer->prev != 0)
 	{
 		if (temp_lexer->next != 0)
 		{
@@ -22,7 +27,14 @@ void	sup_list2(t_list *temp_lexer)
 			temp_lexer->next->prev = temp_lexer->prev;
 		}
 		else
+		{
 			temp_lexer->prev->next = 0;
+		}
+	}
+	else
+	{
+		if (temp_lexer->next != 0)
+			temp_lexer->next->prev = NULL;
 	}
 }
 
@@ -46,11 +58,8 @@ t_list	*get_lexer_bis(t_list **lexer, char **a, t_list *prev, int i)
 	return (prev);
 }
 
-void	get_lexer(t_list **lexer, char **a)
+t_list	**lexer_condi(t_list **lexer)
 {
-	int		i;
-	t_list	*prev;
-
 	if ((*lexer))
 	{
 		while (*lexer)
@@ -59,6 +68,15 @@ void	get_lexer(t_list **lexer, char **a)
 			(*lexer) = (*lexer)->next;
 		}
 	}
+	return (lexer);
+}
+
+void	get_lexer(t_list **lexer, char **a)
+{
+	int		i;
+	t_list	*prev;
+
+	lexer = lexer_condi(lexer);
 	i = -1;
 	while (a[++i])
 	{

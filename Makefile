@@ -7,6 +7,7 @@ BUILT_IN		=	$(addprefix ./sources/built_in/,\
 					s_env.c\
 					s_exit.c\
 					s_export.c\
+					export_utilses.c \
 					s_pwd.c\
 					s_unset.c\
 					env_utils.c)
@@ -15,22 +16,24 @@ SRCS 			=	$(addprefix $(SRCS_DIR),\
 					builtin_change.c \
 					cmd_bis.c\
 					cmd.c \
-					error_return.c \
-					exec_cmd_path.c \
-					execut.c \
 					expender_bis.c \
+					execut.c \
 					expender.c \
 					file_input.c\
 					file_output.c\
 					free_all.c \
+					ft_split_bis.c \
 					ft_split_mutan.c \
 					init_data.c\
 					minishell_bis.c \
-					pipe.c\
-					redirection_bis.c \
+					num_count.c\
+					pipes.c\
+					pipes_utils.c\
+					exec_cmd.c\
 					redirection.c \
 					s_minishell.c \
 					s_token.c\
+					split_utilses.c\
 					str_utils.c)
 					
 					
@@ -53,10 +56,10 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@make -C $(LIBFT)
-			@gcc $(CFLAGS) $(LFLAGS) -o $(NAME) $(OBJS) $(LIBFT)/libft.a
+			@gcc $(CFLAGS) $(LFLAGS) -fsanitize=address -o $(NAME) $(OBJS) $(LIBFT)/libft.a
 
 %.o:		%.c
-			@gcc $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+			@gcc $(CFLAGS) -fsanitize=address -I $(INCLUDES) -c $< -o $@
 
 clean:
 			${RM} ${OBJS}

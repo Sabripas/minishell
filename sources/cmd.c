@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:34:27 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/20 17:58:38 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:09:28 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	is_token_bisbis(t_list	**tp, t_list **pv, t_list **ll, int l)
 	}
 	else if ((*ll)->token == 0)
 	{
-		ft_printf("test\n");
 		(*pv) = ft_lstnew(0, (*ll)->str, 0, (*pv));
 		ft_lstadd_back(tp, (*pv));
 	}
@@ -79,12 +78,16 @@ t_list	*is_token_bis(t_list	*tp, t_list *pv, t_list *ll)
 		{
 			k = open(ll->next->str, O_RDONLY);
 			if (k == -1)
-				ll->token = 6;
+			{
+				ll->token = error_6(ll->next->str);
+			}
 			else
 				close (k);
 		}
 		if (ll->token != Not_a_token || l == 1)
 		{
+			if (l == 1)
+				l = 0;
 			l = is_token_bisbis(&tp, &pv, &ll, l);
 		}
 		ll = ll->next;

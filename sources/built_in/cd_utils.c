@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iait-ouf <aitouflih.iman@gmail.com>        +#+  +:+       +#+        */
+/*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 10:47:19 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/15 10:47:25 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:47:51 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ int	index_tab_searcher(char **tab, char *str, int len)
 		i++;
 	}
 	return (-1);
+}
+
+int	ft_str_isalnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] < 'A' || str[i] > 'Z') && (str[i] < 'a' || str[i] > 'z')
+			&& (str[i] < '0' || str[i] > '9'))
+			return (1);
+		i++;
+	}
+	return (0);
 }

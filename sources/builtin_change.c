@@ -33,3 +33,9 @@ int	is_buitin(char *a)
 	else
 		return (0);
 }
+
+int	error_6(char *str)
+{
+	ft_printf("mnishell: %s: ", str);
+	return (6);
+}

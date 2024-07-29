@@ -6,26 +6,11 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:33:03 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/17 11:41:06 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:41:59 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	ft_str_isalnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] < 'A'|| str[i] > 'Z') && (str[i] < 'a' || str[i] > 'z')
-			&& (str[i] < '0' || str[i] > '9'))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	ft_isalpha(int c)
 {
@@ -48,8 +33,8 @@ void	update_env(t_data *data, int i)
 
 int	error_unset(t_data *data, int i)
 {
-	printf("minishell: unset: `%s': not a valid identifier\n", (*data->cmd)->str[i]);
-	//ft_putstr_fd("not a valid identifier\n", 2);
+	printf("minishell: unset: `%s': not a valid identifier\n",
+		(*data->cmd)->str[i]);
 	return (data->exit_code = 1);
 }
 
@@ -66,7 +51,6 @@ int	exe_unset(t_data *data)
 {
 	int	i;
 	int	n;
-	//int test;
 
 	n = 1;
 	while ((*data->cmd)->str[n] != NULL)
@@ -76,7 +60,8 @@ int	exe_unset(t_data *data)
 			return (1);
 		while (data->env[i])
 		{
-			if (ft_strncmp((*data->cmd)->str[n], data->env[i], char_check(0, '=', data->env[i])) == 0)
+			if (ft_strncmp((*data->cmd)->str[n], data->env[i],
+					char_check(0, '=', data->env[i])) == 0)
 			{
 				free(data->env[i]);
 				data->env[i] = NULL;

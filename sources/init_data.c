@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:03:33 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/20 18:03:35 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:15:48 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_path(t_data *data, int n)
 	path_tmp = ft_strdup(data->env[n]);
 	data->paths = (char **)malloc(9 * sizeof(char *));
 	if (!data->paths)
-		exit (EXIT_FAILURE); // protextion malloc
-	while (path_tmp[j])
+		exit (EXIT_FAILURE);
+	while (path_tmp[j++])
 	{
 		if (char_check(path_tmp[j], ':', NULL) == 0)
 		{
@@ -36,10 +36,31 @@ void	init_path(t_data *data, int n)
 			k = j;
 			i++;
 		}
-		j++;
 	}
 	data->paths[i] = NULL;
 	free(path_tmp);
+}
+
+int	env_special_cases(t_data *struc, char **env, int i)
+{
+	if (ft_strncmp("PATH=", env[i], 5) == 0)
+	{
+		struc->env[i] = ft_strdup(env[i]);
+		init_path(struc, i);
+		return (1);
+	}
+	if (ft_strncmp("OLDPWD=", env[i], 7) == 0)
+	{
+		struc->env[i] = ft_strdup("OLDPWD");
+		return (1);
+	}
+	if (ft_strncmp("USER=", env[i], 5) == 0)
+	{
+		struc->user = ft_substr(env[i], 13,
+				(ft_strlen(env[i]) - len_to_egal(env[i])));
+		return (0);
+	}
+	return (0);
 }
 
 t_data	*init_env(t_data *struc, char **env, t_cmd **cmd)
@@ -48,40 +69,18 @@ t_data	*init_env(t_data *struc, char **env, t_cmd **cmd)
 
 	i = 0;
 	struc->nb_var = 35;
-	struc->env = (char **)malloc(struc->nb_var * sizeof(char *)); 
+	struc->shlvl = 2;
+	struc->env = (char **)malloc(struc->nb_var * sizeof(char *));
 	if (!struc->env)
-		exit(EXIT_FAILURE); // ECRIRE MSG ERREUR STRERROR ??
+		exit(EXIT_FAILURE);
 	while (i < struc->nb_var - 1 && env[i])
 	{
-		if (ft_strncmp("PATH=", env[i], 5) == 0)
-		{
-			struc->env[i] = ft_strdup(env[i]);
-			init_path(struc, i);
+		if (env_special_cases(struc, env, i) == 1)
 			i++;
-		}
-		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
-		{
-			struc->env[i] = ft_strdup("SHLVL=2");
-			i++;
-		}
-		if (ft_strncmp("OLDPWD=", env[i], 7) == 0)
-		{
-			struc->env[i] = ft_strdup("OLDPWD");
-			i++;
-		}
 		struc->env[i] = ft_strdup(env[i]);
 		i++;
 	}
 	struc->cmd = cmd;
 	struc->env[i] = NULL;
-	i = 0;
-	while (struc->env[i])
-	{
-		if(ft_strncmp(struc->env[i], "USER", 4) == 0)
-		{
-			struc->user = ft_substr(struc->env[i], 13, (ft_strlen(struc->env[i]) - len_to_egal(struc->env[i]))); 
-		}
-		i++;
-	}
 	return (struc);
 }

@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:31:09 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/15 10:43:45 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:20:15 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	cd_error_handler(int errnum, void *ptr, t_data *data)
 {
 	errnum = errno;
-	printf("minishell : cd: %s: %s\n", ptr, strerror(errno));
+	(void) ptr;
+	write(2, "bash: cd: ", 10);
+	write(2, ptr, ft_strlen(ptr));
+	write(2, ": No such file or directory\n", 28);
 	return (data->exit_code = 1);
 }
 
@@ -61,7 +64,6 @@ int	cd_home(t_data *data)
 int	exe_cd(t_data *data)
 {
 	int		i;
-	//char	*home;
 
 	i = 0;
 	if ((*data->cmd)->str[1] == NULL

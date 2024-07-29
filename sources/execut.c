@@ -6,7 +6,9 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:31:42 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/21 15:42:03 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:52:59 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:40:45 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:37:45 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +16,7 @@
 
 void	is_not_builtin(t_data *data)
 {
-	find_cmd(data);
+	one_command(data);
 }
 
 void	execut_simple(t_cmd *cmd, t_data *data)
@@ -29,12 +31,6 @@ void	execut_simple(t_cmd *cmd, t_data *data)
 		is_not_builtin(data);
 }
 
-void	execut_pipe(t_data *data)
-{
-	ft_printf("it's a pipe\n");
-	pipe_redirection(data);
-}
-
 void	execut(t_cmd **cmd, t_data *data)
 {
 	t_cmd	*temp_cmd;
@@ -46,6 +42,6 @@ void	execut(t_cmd **cmd, t_data *data)
 	}
 	else
 	{
-		execut_pipe(data);
+		multi_pipe(data);
 	}
 }

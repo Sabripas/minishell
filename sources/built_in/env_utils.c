@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:27:48 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/15 09:48:14 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:18:46 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**ar_dup_or_raised(t_data *data, char	**original, char **new_strs)
 	new_ar = (char **) malloc ((data->nb_var + data->nb_input + 1)
 			* sizeof(char *));
 	if (!new_ar)
-		exit(1); // ET FREE EN CONSEQUENCES -> data->env[i] toutes les str
+		exit(1);
 	while (ind[0] < data->nb_var - 1 && original[ind[0]])
 	{
 		new_ar[ind[0]] = ft_strdup(original[ind[0]]);

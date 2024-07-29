@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:44:18 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/24 14:29:25 by ssteveli         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:46:48 by ssteveli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	free_all(t_list **lexer, t_cmd **cmd, char **str)
 	{
 		ft_lstdel(lexer);
 		free(lexer);
+		lexer = 0;
 	}
 	if (cmd != 0)
 	{

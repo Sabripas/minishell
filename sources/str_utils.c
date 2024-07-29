@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iait-ouf <aitouflih.iman@gmail.com>        +#+  +:+       +#+        */
+/*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 09:25:47 by iait-ouf          #+#    #+#             */
-/*   Updated: 2024/06/15 09:26:09 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:17:39 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ar_dup(t_data *data, char **tab)
 	i = 0;
 	new_ar = (char **) malloc ((data->nb_input + 1) * sizeof(char *));
 	if (!new_ar)
-		exit(1); // ET FREE EN CONSEQUENCES
+		exit(1);
 	while (tab[i] && i < data->nb_input)
 	{
 		new_ar[i] = ft_strdup(tab[i]);

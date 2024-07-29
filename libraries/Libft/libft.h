@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:38:53 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/18 14:41:17 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:37:11 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 
 # define TO_PIPE 1
 # define FROM_PIPE 0
+# define READ 0
+# define WRITE 1
 
 typedef struct s_glob
 {
 	int				in_heredoc;
+	int				exit_code;
 }	t_glob;
 
 typedef struct s_data
@@ -40,6 +43,8 @@ typedef struct s_data
 	int				out_fd;
 	int				in_fd;
 	int				pipe_fd[2];
+	int				pipe_in[2];
+	int				pipe_out[2];
 	struct s_cmd	**cmd;
 	char			*user;
 }	t_data;

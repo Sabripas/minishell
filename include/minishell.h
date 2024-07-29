@@ -6,7 +6,7 @@
 /*   By: ssteveli <ssteveli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:46:32 by ssteveli          #+#    #+#             */
-/*   Updated: 2024/06/18 14:30:06 by iait-ouf         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:46:07 by iait-ouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
@@ -39,6 +40,14 @@ void	pwd_update(t_data *struc);
 void	shlvl_updater(t_data *data);
 
 int		exe_exit(struct s_data *struc);
+
+//--------------- EXPORT_UTILISES
+void	ft_swap(char **a, char **b);
+char	**bubble_sort(t_data *data);
+void	free_char_ar(char **ar);
+void	display_writer(char **strs, int i, int j);
+void	export_display(t_data *data);
+
 // -------------- EXPORT ----------------------
 int		exe_export(t_data *struc);
 
@@ -72,22 +81,27 @@ int		index_tab_searcher(char **tab, char *str, int len);
 
 int		count_str(t_data *data);
 int		char_check(char cmp, char to_find, char *str);
+int		link_lists_counter(t_data *data);
+void	swap_pipes(int src[2], int dest[2]);
+void	waiting_children(void);
+void	redirection_check(t_data *data, t_cmd *cmds);
 
 // ----------------- CMD PATH ------------------
 
-int		find_cmd(t_data *data);
-int		find_multi_cmd(t_data *data);
+int		one_command(t_data *data);
+int		find_cmd(t_data *data, t_cmd *cmds);
 
 // ----------------- REDIRECTIONS --------------
 
 int		mini_pars_infile(t_data *data);
 int		error_infile(t_data *data);
-int		outfile_redirection(t_data *data);
-int		infile_redirection(t_data *data);
+int		outfile_redirection(t_data *data, t_cmd *cmds);
+int		infile_redirection(t_data *data, t_cmd *cmds);
 
 // ------------------ PIPE --------------------
 
-int		pipe_redirection(t_data *data);
+int		multi_pipe(t_data *data);
+int		ft_str_isalnum(char *str);
 
 //builtin_change
 int		is_buitin(char *a);
@@ -101,33 +115,39 @@ t_cmd	*get_cmds_bis(t_list *tl, t_cmd *tc, t_cmd *prev, t_list **lx);
 int		get_cmds(t_list **lexer, t_cmd **cmds);
 t_list	*is_token_bis(t_list	*tp, t_list *pv, t_list *ll);
 
-//erro_return
-void	error_return(int i, char *str);
-
 //execut
 void	execut(t_cmd **cmd, t_data *data);
 
 //expender_bis
-char	**replace_exp(char **a, char *str);
-int		multi_condi(t_data *data, int j, char *str_temp);
-char	**hextend_bis(char **a, t_data *data, char *str, int i);
+char	*after_egal(char *str);
+int		len_to_space(char *str, int i);
+char	*load_str(char *a, int i);
 
 //expender
-char	**hextend(char **a, t_data *data);
+char	*hextend(char *a, t_data *data);
 int		len_to_egal(char *str);
-char	*after_egal(char *str);
 
 //free_all
 void	ft_lstdel_cmd(t_cmd **cmd);
 int		free_all(t_list **lexer, t_cmd **cmd, char **str);
 
+//ft_split_bis
+int		ft_error_write(char str);
+int		ft_splite_mutan_bisbis(int i, int size, char *str);
+char	*transform(char *str, int i);
+int		change_in(int in);
+int		transchangeind(int i, char **str, int *ind);
+
 //ft_split_mutan
-char	**ft_splite_mutan(char *str);
+char	**ft_splite_mutan(char *str, t_data *data);
 
 //minishell_bis
 void	sign_handler(int code);
-void	init_minishell(t_data **d, t_cmd ***c, t_list ***l, char **e);
-int		launch_mini(char *str, t_data *data, t_cmd **cmd, t_list **lexer );
+void	init_minishell(t_data **d, t_cmd ***c, char **e);
+int		launch_mini(char **str, t_data *data, t_cmd **cmd, t_list **lexer);
+
+//num_count
+int		num_count(char *str, char c);
 
 //redirection_bis
 void	redirection_2(t_data *data);
@@ -148,6 +168,12 @@ void	sign_handler(int code);
 void	sup_list2(t_list *temp_lexer);
 void	get_lexer(t_list **lexer, char **a);
 int		get_cmds(t_list **lexer, t_cmd **cmds);
+
+//split_utilses
+int		error_quot(void);
+int		len_to_sep(char *str, int i, char c);
+
+int		error_6(char *str);
 
 t_glob	g_glob;
 

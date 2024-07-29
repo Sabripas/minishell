@@ -16,13 +16,15 @@ int	exe_echo(t_data *data)
 {
 	int	i;
 
-	if (ft_strncmp((*data->cmd)->str[1], "-n", 2) == 0)
-		i = 2;
-	else
-		i = 1;
+	i = 1;
 	while ((*data->cmd)->str[i] != NULL)
 	{
-		printf("%s", (*data->cmd)->str[i]);
+		if (ft_strncmp((*data->cmd)->str[1], "-n", 2) != 0)
+		{
+			if (i != 1)
+				printf(" ");
+			printf("%s", (*data->cmd)->str[i]);
+		}
 		i++;
 	}
 	if (ft_strncmp((*data->cmd)->str[1], "-n", 2) == 0)
